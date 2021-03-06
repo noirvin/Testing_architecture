@@ -125,7 +125,7 @@ class ForecastDisplay:
         self.display()
 
     def display(self):
-        print("Forecast temperatures:", self.forcast_temp, 
+        print("Forecast temperatures:", self.forcast_temp,
               "Forecast humidity:", self.forcast_humidity,
               "Forecast pressure", self.forcast_pressure)
 
@@ -137,6 +137,8 @@ class WeatherStation:
         # TODO: Create two objects from StatisticsDisplay class and
         # ForecastDisplay class. Also register them to the concerete instance
         # of the Subject class so the they get the measurements' updates.
+        statistics_display = StatisticsDisplay(weather_data)
+        forecast_display = ForecastDisplay(weather_data)
 
         # The StatisticsDisplay class should keep track of the min/average/max
         # measurements and display them.
