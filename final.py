@@ -183,3 +183,57 @@ def computer_turn(comp_board, play_letter, comp_letter):
     make_move(comp_board, comp_letter, comp_move)
 
 print('Welcome to Tic Tac Toe!')
+
+# The following mega code block is a huge hairy monster. Break it down
+# into smaller methods. Use TODO s and the comment above each section as a guide
+# for refactoring.
+def play(game_is_playing):
+    gameIsPlaying = game_is_playing
+    while gameIsPlaying: # TODO: Usually (not always), loops (or their content) are good candidates to be extracted into their own function.
+                         #       Use a meaningful name for the function you choose.
+        if turn == 'player':
+            # Player’s turn.
+            drawBoard(theBoard)
+            move = getPlayerMove(theBoard)
+            makeMove(theBoard, playerLetter, move)
+
+            if isWinner(theBoard, playerLetter):
+                drawBoard(theBoard)
+                print('Hooray! You have won the game!')
+                gameIsPlaying = False
+            else:  # TODO: is this 'else' necessary?
+                if isBoardFull(theBoard):
+                    drawBoard(theBoard)
+                    print('The game is a tie!')
+                    break
+                else:  # TODO: Is this 'else' necessary?
+                    turn = 'computer'
+
+        else:
+            # Computer’s turn.
+            move = getComputerMove(theBoard, computerLetter)
+            makeMove(theBoard, computerLetter, move)
+
+            if isWinner(theBoard, computerLetter):
+                drawBoard(theBoard)
+                print('The computer has beaten you! You lose.')
+                gameIsPlaying = False
+            else:     # TODO: is this 'else' necessary?
+                if isBoardFull(theBoard):
+                    drawBoard(theBoard)
+                    print('The game is a tie!')
+                    break
+                else: # TODO: Is this 'else' necessary?
+                    turn = 'player'
+
+    if not playAgain():
+        break
+while True:
+    # Reset the board
+    theBoard = [' '] * 10 # TODO: Refactor the magic number in this line (and all of the occurrences of 10 thare are conceptually the same.)
+    playerLetter, computerLetter = inputPlayerLetter()
+    turn = whoGoesFirst()
+    print('The ' + turn + ' will go first.')
+    gameIsPlaying = True # TODO: Study how this variable is used. Does it ring a bell? (which refactoring method?)
+                         #       See whether you can get rid of this 'flag' variable. If so, remove it.
+    play(gameIsPlaying)
