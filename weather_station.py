@@ -81,6 +81,53 @@ class CurrentConditionsDisplay(Observer):
 
 # TODO: implement StatisticsDisplay class and ForecastDisplay class.
 
+class StatisticsDisplay:
+    def __init__(self, weather_Data):
+        self.temperatures = []
+        self.humidities = []
+        self.pressures = []
+
+        self.weather_Data = weather_Data # save the ref in an attribute.
+        weatherData.registerObserver(self) # register the observer
+                                           # so it gets data updates.
+    def update(self, temperature, humidity, pressure):
+        self.temperatures.append(temperature)
+        self.humidities.append(humidity)
+        self.pressures.append(pressure)
+        self.display()
+
+    def display(self):
+        print("Min temp:", min(self.temperatures))
+        print("Average temp:", sum(self.temperatures)/len(self.temperatures))
+        print("Max temp:", max(self.temperatures))
+
+        print("Min Humidity:", min(self.humidities))
+        print("Average Humidity:", sum(self.humidities)/len(self.humidities))
+        print("Max Humidity:", max(self.humidities))
+
+        print("Min pressure:", min(self.pressures))
+        print("Average pressure:", sum(self.pressures)/len(self.pressures))
+        print("Max pressure:", max(self.pressures))
+
+class ForecastDisplay:
+    def __init__(self, weather_Data):
+        self.forcast_temp = 0
+        self.forcast_humadity = 0
+        self.forcast_pressure = 0
+
+        self.weather_Data = weather_Data # save the ref in an attribute.
+        weather_Data.registerObserver(self) # register the observer
+                                           # so it gets data updates.
+    def update(self, temperature, humidity, pressure):
+        self.forcast_temp = temperature + 0.11 * humidity + 0.2 * pressure
+        self.forcast_humidity = humidity - 0.9 * humidity
+        self.forcast_pressure = pressure + 0.1 * temperature - 0.21 * pressure
+        self.display()
+
+    def display(self):
+        print("Forecast temperatures:", self.forcast_temp, 
+              "Forecast humidity:", self.forcast_humidity,
+              "Forecast pressure", self.forcast_pressure)
 
 class WeatherStation:
     def main(self):
